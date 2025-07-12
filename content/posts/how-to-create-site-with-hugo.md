@@ -2,7 +2,7 @@
 title: "Как создать сайт с Hugo"
 date: 2025-07-03T20:19:41+03:00
 author: Nisakoo
-draft: true
+draft: false
 ---
 
 Все было выполенено на *Ubuntu*
@@ -32,7 +32,7 @@ git submodule add git@github.com:adityatelange/hugo-PaperMod.git themes/papermod
 
 Редактируем `config.yml`
 ```yml
-languageCode: ru
+languageCode: ru-ru
 title: Title
 theme: papermod
 ```
