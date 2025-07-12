@@ -5,7 +5,7 @@ author: Nisakoo
 draft: false
 ---
 
-Все было выполенено на *Ubuntu*
+Все было выполенено на *Ubuntu*. Постарался без воды
 
 ## Установка компонентов
 
@@ -47,7 +47,9 @@ resources/_gen/
 .hugo_build.lock
 ```
 
-## Настраиваем Github Actions
+## Настраиваем Github Actions и Pages
+
+Начнем с **Actions**:
 
 ```bash
 mkdir -p .github/workflows
@@ -150,8 +152,14 @@ jobs:
 
 За основу взял *[эту конфигурацию](https://gohugo.io/host-and-deploy/host-on-github-pages/)*. Убрал установку **Dart Sass** и **Node.js** зависимостей
 
-## Публикуем на хостинге
+**Pages**:
+
+Переходим в настройки репоизтория на GitHub -> Pages -> Ставим Source в «GitHub Actions»
 
 ## Первая страница
 
-Теперь можно сделать первую публикацию о том, *[как создать сайт c Hugo](https://hello.world)*
+Теперь можно сделать первую публикацию о том, *[как создать сайт c Hugo]({{< ref "posts/how-to-create-site-with-hugo.md" >}})*
+
+```bash
+hugo new posts/how-to-create-site-with-hugo.md
+```
