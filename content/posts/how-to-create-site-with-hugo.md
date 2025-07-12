@@ -1,0 +1,157 @@
+---
+title: "Как создать сайт с Hugo"
+date: 2025-07-03T20:19:41+03:00
+author: Nisakoo
+draft: true
+---
+
+Все было выполенено на *Ubuntu*
+
+## Установка компонентов
+
+Устанавливаем **Hugo**:
+```bash
+sudo snap install hugo --channel=extended
+```
+
+Создаем пустой сайт:
+```bash
+hugo new site my-site --format yaml
+cd my-site
+```
+
+Добавляем тему, в моем случае **PaperMod**:
+```bash
+git init
+git submodule add git@github.com:adityatelange/hugo-PaperMod.git themes/papermod
+```
+
+*Больше тем на [официальном сайте](https://themes.gohugo.io/)*
+
+## Настраиваем Hugo
+
+Редактируем `config.yml`
+```yml
+languageCode: ru
+title: Title
+theme: papermod
+```
+
+## Настройка Git
+
+Создаем `.gitignore` и вставляем:
+
+```git
+public/
+resources/_gen/
+.hugo_build.lock
+```
+
+## Настраиваем Github Actions
+
+```bash
+mkdir -p .github/workflows
+touch .github/workflows/hugo.yml
+```
+
+В `hugo.yml` вставляем:
+
+```yml
+name: Deploy Hugo site to Pages
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: 0.148.1
+      HUGO_ENVIRONMENT: production
+      TZ: Europe/Moscow
+    steps:
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
+          sudo dpkg -i ${{ runner.temp }}/hugo.deb
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Cache Restore
+        id: cache-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ${{ runner.temp }}/hugo_cache
+          key: hugo-${{ github.run_id }}
+          restore-keys:
+            hugo-
+
+      - name: Configure Git
+        run: git config core.quotepath false
+
+      - name: Build with Hugo
+        run: |
+          hugo \
+            --gc \
+            --minify \
+            --baseURL "${{ steps.pages.outputs.base_url }}/" \
+            --cacheDir "${{ runner.temp }}/hugo_cache"
+
+      - name: Cache Save
+        id: cache-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ${{ runner.temp }}/hugo_cache
+          key: ${{ steps.cache-restore.outputs.cache-primary-key }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+За основу взял *[эту конфигурацию](https://gohugo.io/host-and-deploy/host-on-github-pages/)*. Убрал установку **Dart Sass** и **Node.js** зависимостей
+
+## Публикуем на хостинге
+
+## Первая страница
+
+Теперь можно сделать первую публикацию о том, *[как создать сайт c Hugo](https://hello.world)*
