@@ -3,6 +3,7 @@ title: "Как создать сайт с Hugo"
 date: 2025-07-03T20:19:41+03:00
 author: Nisakoo
 draft: false
+ShowToc: true
 ---
 
 Все было выполенено на *Ubuntu*. Постарался без воды
@@ -31,7 +32,7 @@ git submodule add git@github.com:adityatelange/hugo-PaperMod.git themes/papermod
 ## Настраиваем Hugo
 
 Редактируем `config.yml`
-```yml
+```yml {linenos=true}
 languageCode: ru-ru
 title: Title
 theme: papermod
@@ -41,7 +42,7 @@ theme: papermod
 
 Создаем `.gitignore` и вставляем:
 
-```git
+```git {linenos=true}
 public/
 resources/_gen/
 .hugo_build.lock
@@ -58,7 +59,7 @@ touch .github/workflows/hugo.yml
 
 В `hugo.yml` вставляем:
 
-```yml
+```yml {linenos=true}
 name: Deploy Hugo site to Pages
 
 on:

@@ -1,3 +1,30 @@
 languageCode: ru-ru
 title: Nisakoo
 theme: papermod
+
+menu:
+  main:
+    - identifier: archives
+      name: Archive
+      url: /archives/
+      weight: 10
+
+params:
+  ShowCodeCopyButtons: true
+
+  profileMode:
+    enabled: true
+    subtitle: "Python, C++. Machine Learning"
+    imageUrl: "https://avatars.githubusercontent.com/u/68136947"
+    imageWidth: 200
+    imageHeight: 200
+
+  socialIcons:
+    - name: "github"
+      url: "https://github.com/Nisakoo"
+
+markup:
+  highlight:
+    codeFences: true
+    guessSyntax: true
+    style: nord
