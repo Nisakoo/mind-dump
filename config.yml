@@ -10,6 +10,7 @@ menu:
       weight: 10
 
 params:
+  disableThemeToggle: true
   ShowCodeCopyButtons: true
 
   profileMode:
