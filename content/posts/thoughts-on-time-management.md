@@ -2,7 +2,7 @@
 title: "Мысли о тайм-менеджменте"
 date: 2025-07-30T14:03:12+05:00
 author: Nisakoo
-draft: true
+draft: false
 ShowToc: true
 ---
 
